@@ -42,7 +42,6 @@ public class PactTranslationBridge extends RouteBuilder {
            if (locmap[i].equals(key))
              idx = i;
          }
-         System.out.println("Returning index of " + idx + " for key " + key);
          return idx;
       }
 
@@ -64,7 +63,6 @@ public class PactTranslationBridge extends RouteBuilder {
       {
         String[] retBody = new String[7];
         String body = exchange.getIn().getBody(String.class);
-        System.out.println("Map Body: " + body);
         Object obj = new JSONParser().parse(body);
         JSONObject jo = (JSONObject)obj;
         JSONArray jra = (JSONArray) jo.get("results");
@@ -81,7 +79,6 @@ public class PactTranslationBridge extends RouteBuilder {
             while (it_loc.hasNext())
             {
               Map.Entry pair = it_loc.next();
-              System.out.println(pair.getKey() + ":" + pair.getValue());
               int idx = getIndex(pair.getKey().toString());
               if (idx != -1)
                 retBody[idx+2] = (pair.getValue().toString());
@@ -91,7 +88,6 @@ public class PactTranslationBridge extends RouteBuilder {
         retBody[0] = mmid1;
         retBody[1] = mmid2;
         
-        System.out.println("Body " + formatBody(retBody));
         exchange.getIn().setBody(formatBody(retBody));
       }
     }
